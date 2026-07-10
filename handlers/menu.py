@@ -4,7 +4,7 @@ from aiogram.fsm.context import FSMContext
 from keyboards import get_main_menu, get_back_button
 from database import get_user_orders
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from github_integration import get_github_activity
+#from github_integration import get_github_activity
 
 
 router = Router()
@@ -113,23 +113,23 @@ async def go_back(callback: CallbackQuery, state: FSMContext):
 
 
 # Тествовые обработчики кнопок с выводом нужной информации, на данный моент я пока не добавляю в основом режиме
-@router.callback_query(lambda c: c.data == "github_activity")
-async def show_github_activity(callback: CallbackQuery, state: FSMContext):
-    activity = get_github_activity()
-    
-    data = await state.get_data()
-    language = data.get("language", "ru")
-    
-    if language == "ru":
-        text = "Моя активность на GitHub:\n\n"
-    else:
-        text = "My GitHub activity:\n\n"
-    
-    for repo in activity:
-        text += f"📁 {repo['name']}\n"
-        text += f"📝 {repo['description']}\n"
-        text += f"⭐ {repo['stars']}\n"
-        text += f"🕒 Последнее обновление: {repo['last_updated']}\n\n"
-    
-    await callback.message.edit_text(text, reply_markup=get_back_button(language))
-    await callback.answer()
+#@router.callback_query(lambda c: c.data == "github_activity")
+#async def show_github_activity(callback: CallbackQuery, state: FSMContext):
+ #   activity = get_github_activity()
+  #  
+   # data = await state.get_data()
+    #language = data.get("language", "ru")
+    #
+    #if language == "ru":
+    #   text = "Моя активность на GitHub:\n\n"
+    #else:
+     #   text = "My GitHub activity:\n\n"
+    #
+    #for repo in activity:
+     #   text += f"📁 {repo['name']}\n"
+      #  text += f"📝 {repo['description']}\n"
+       # text += f"⭐ {repo['stars']}\n"
+        #text += f"🕒 Последнее обновление: {repo['last_updated']}\n\n"
+    #
+    #await callback.message.edit_text(text, reply_markup=get_back_button(language))
+    #await callback.answer()
