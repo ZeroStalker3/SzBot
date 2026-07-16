@@ -35,5 +35,5 @@ jobs:
           git pull origin main
           source venv/bin/activate
           pip install -r requirements.txt --quiet
-          sudo systemctl restart zerodash-bot
+          sudo systemctl restart zeroyzbot
           echo "✅ OK"
