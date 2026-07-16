@@ -1,0 +1,39 @@
+name: Deploy to Server ZeroYz
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Connect to Tailscale
+      uses: tailscale/github-action@v2
+      with:
+        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+        tags: tag:ci
+      env:
+        TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+        TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
+    
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.SSH_PORT || 22 }}
+        script: |
+          cd /home/${{ secrets.SERVER_USER }}/SzBot
+          echo "Start run"
+          git pull origin main
+          source venv/bin/activate
+          pip install -r requirements.txt --quiet
+          sudo systemctl restart zerodash-bot
+          echo "✅ OK"
