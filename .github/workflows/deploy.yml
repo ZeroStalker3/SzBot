@@ -12,16 +12,15 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
     
-    - name: Connect to Tailscale
-      uses: tailscale/github-action@v2  
-      with:
-        oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-        oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-        tags: tag:ci
-      env:
-        TS_OAUTH_CLIENT_ID: ${{ secrets.TS_OAUTH_CLIENT_ID }}
-        TS_OAUTH_SECRET: ${{ secrets.TS_OAUTH_SECRET }}
-    
+    - name: Install Tailscale via apt
+      run: |
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.noarmor.gpg | sudo tee /etc/apt/keyrings/tailscale-archive-keyring.gpg >/dev/null
+        curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/noble.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list
+        sudo apt-get update
+        sudo apt-get install -y tailscale
+        sudo tailscale up --oauth-client-id=${{ secrets.TS_OAUTH_CLIENT_ID }} --oauth-secret=${{ secrets.TS_OAUTH_SECRET }} --tags=tag:ci
+        
     - name: Deploy to server
       uses: appleboy/ssh-action@v1.0.0
       with:
