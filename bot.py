@@ -2,12 +2,12 @@ import asyncio
 import logging
 from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession  # Добавляем этот импорт
-from config import TOKEN
+from config import TOKEN, PROXY_URL
 from database import init_db
 from handlers import start, menu, order
 
 # Настраиваем прокси. 1080 — это порт твоего контейнера xray-client
-session = AiohttpSession(proxy="socks5://127.0.0.1:1080")
+session = AiohttpSession(proxy=PROXY_URL)
 
 # Инициализация бота с использованием сессии
 bot = Bot(token=TOKEN, session=session)
