@@ -1,92 +1,104 @@
-# SzBot
+# SzBot - Telegram Portfolio & Lead Generation Bot
 
-SzBot - это бот-портфолио, который позволяет пользователям узнать больше обо мне, моих проектах, навыках и связаться со мной. Бот также предоставляет возможность оставить заявку на разработку.
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/aiogram-3.x-blue?logo=telegram" alt="aiogram">
+  <img src="https://img.shields.io/badge/Database-SQLite/Postgres-lightgrey" alt="DB">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</div>
 
-## Функциональность
+## 📖 О проекте
+**SzBot** — это телеграм-бот, выполняющий роль интерактивного портфолио и автоматизированной системы лидогенерации. Проект спроектирован с учетом масштабируемости, чистоты кода и лучших практик разработки асинхронных приложений. 
 
-- **Информация обо мне**: Узнайте больше о моих навыках и опыте.
-- **Примеры работ**: Посмотрите примеры моих проектов на GitHub.
-- **Контакты**: Свяжитесь со мной через Telegram или Email.
-- **Резюме**: Скачайте мое резюме (в разработке).
-- **Отзывы клиентов**: Ознакомьтесь с отзывами клиентов (скоро появятся).
-- **Форма заказа**: Оставьте заявку на разработку.
+Бот позволяет потенциальным клиентам ознакомиться с моим стеком, кейсами и оставить структурированную заявку на разработку, которая автоматически доставляется и отслеживается.
 
-## Установка
+## 🚀 Ключевые возможности
+* **Интерактивное портфолио**: Навигация по навыкам, стеку и примерам работ через Inline-клавиатуры.
+* **Lead Generation (Заказы)**: Многошаговая форма заказа (FSM) с валидацией данных и сохранением заявок в БД.
+* **Админ-панель**: Управление лидами, смена статусов заказов, аналитика.
+* **Асинхронная архитектура**: Неблокирующие операции ввода-вывода для высокой отказоустойчивости.
 
-1. Клонируйте репозиторий:
-    ```sh
-    git clone https://github.com/ZeroStalker3/SzBot.git
-    cd SzBot
-    ```
+## 🛠 Стек технологий и Архитектура
+* **Core**: Python 3.10+, `aiogram 3.x` (роутеры, FSM, Dispatcher).
+* **Data Layer**: `SQLAlchemy` / `aiosqlite` (или другой ORM/драйвер, *уточнить по коду*), Repository Pattern.
+* **Config**: `pydantic-settings` / `python-dotenv` (валидация переменных окружения).
+* **Архитектурные паттерны**: Разделение на слои (Handlers -> Services -> Repositories), Dependency Injection (если применяется).
 
-2. Создайте виртуальное окружение и активируйте его:
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # Для Windows: venv\Scripts\activate
-    ```
+## ⚙️ Установка и запуск
 
-3. Установите зависимости:
-    ```sh
-    pip install -r requirements.txt
-    ```
+### Требования
+* Python 3.10+
+* Docker & Docker Compose (опционально, для изолированного запуска)
 
-4. Создайте файл `config.py` и добавьте ваш токен бота и ID администратора:
-    ```python
-    TOKEN = "ВАШ_ТОКЕН_БОТА"
-    ADMIN_ID = ВАШ_ID_АДМИНИСТРАТОРА
-    ```
-
-5. Инициализируйте базу данных:
-    ```sh
-    python -c "from database import init_db; init_db()"
-    ```
-
-## Запуск
-
-Запустите бота:
-```sh
-python bot.py
+### Шаг 1: Клонирование и окружение
+```bash
+git clone https://github.com/ZeroStalker3/SzBot.git
+cd SzBot
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 ```
 
-## Структура проекта
+### Шаг 2: Конфигурация
+Создайте файл `.env` в корне проекта на основе `.env.example`:
 
-- `bot.py`: Основной файл для запуска бота.
-- `config.py`: Конфигурационный файл с токеном бота и ID администратора.
-- `database.py`: Модуль для работы с базой данных.
-- `handlers/`: Директория с обработчиками команд и callback-запросов.
-  - `start.py`: Обработчик команды `/start`.
-  - `menu.py`: Обработчик меню и информации обо мне.
-  - `order.py`: Обработчик заказов.
-- `keyboards.py`: Модуль для создания клавиатур.
-- `states.py`: Модуль для управления состояниями.
-- `utils.py`: Вспомогательные функции.
-- `requirements.txt`: Список зависимостей.
+# Telegram
+BOT_TOKEN="YOUR_TELEGRAM_BOT_TOKEN"
+ADMIN_ID=123456789
 
-## Использование
+# Database
+DATABASE_URL="sqlite+aiosqlite:///./szbot.db"
 
-### Команды
+# App
+LOG_LEVEL="INFO"
 
-- `/start`: Запуск бота и отображение главного меню.
-- `/orders`: Просмотр активных заказов (только для администратора).
+Шаг 3: Зависимости и миграции
 
-### Callback-запросы
+```bash
+pip install -r requirements.txt
+# Инициализация БД / применение миграций (Alembic)
+python -m src.database.init_db 
+```
 
-- `info`: Информация обо мне.
-- `projects`: Примеры работ.
-- `contacts`: Контакты.
-- `resume`: Резюме.
-- `reviews`: Отзывы клиентов.
-- `order`: Форма заказа.
-- `cancel_order`: Отмена заказа.
-- `back`: Возврат в главное меню.
-- `back_to_orders`: Возврат к списку заказов.
-- `complete_<order_id>`: Пометка заказа как выполненного.
+Шаг 4: Запуск
 
-## Контакты
+```bash
+python -m bot
+```
 
-- Telegram: [@Shad_Zero](https://t.me/Shad_Zero)
-- GitHub: [ZeroStalker3](https://github.com/ZeroStalker3)
+📁 Структура проекта (Refactored)
+Рекомендуемая структура для масштабируемого бота:
 
-## Лицензия
+SzBot/
+├── bot/                  # Точка входа, конфигурация Dispatcher и роутеров
+├── src/
+│   ├── core/             # Конфиги (.env), логирование, DI
+│   ├── database/         # Модели ORM, репозитории, сессии
+│   ├── handlers/         # Обработчики команд и callback (разбиты по роутерам)
+│   ├── keyboards/        # Генерация inline и reply клавиатур
+│   ├── services/         # Бизнес-логика (например, OrderService)
+│   └── states/           # Группы состояний FSM
+├── .env                  # Переменные окружения (не коммитится!)
+├── requirements.txt
+└── README.md
 
-Этот проект лицензирован под лицензией MIT. Подробности см. в файле [LICENSE](LICENSE).
+### 📡 API бота (Команды и Callbacks)
+
+# Пользовательские команды
+| Команда | Описание |
+|----------|--------|
+|`/start`|Инициализация сессии, приветствие и главное меню|
+|`/help`|Справка по функциональности бота|
+
+# Административные команды
+| Команда | Описание |
+|----------|--------|
+|`/orders`|Вывод пагинированного списка активных лидов (заявок)|
+
+# FSM Сценарии
+
+    Order Form: waiting_for_service ➔ waiting_for_budget ➔ waiting_for_description ➔ confirm_order.
+
+# Контакты и Связь
+
+    Telegram: @Shad_Zero
+    GitHub: ZeroStalker3
