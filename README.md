@@ -69,17 +69,17 @@ python -m bot
 Рекомендуемая структура для масштабируемого бота:
 
 SzBot/
-├── bot/                  # Точка входа, конфигурация Dispatcher и роутеров
-├── src/
-│   ├── core/             # Конфиги (.env), логирование, DI
-│   ├── database/         # Модели ORM, репозитории, сессии
-│   ├── handlers/         # Обработчики команд и callback (разбиты по роутерам)
-│   ├── keyboards/        # Генерация inline и reply клавиатур
-│   ├── services/         # Бизнес-логика (например, OrderService)
-│   └── states/           # Группы состояний FSM
-├── .env                  # Переменные окружения (не коммитится!)
-├── requirements.txt
-└── README.md
+    ├── bot/                  # Точка входа, конфигурация Dispatcher и роутеров
+    ├── src/
+    │   ├── core/             # Конфиги (.env), логирование, DI
+    │   ├── database/         # Модели ORM, репозитории, сессии
+    │   ├── handlers/         # Обработчики команд и callback (разбиты по роутерам)
+    │   ├── keyboards/        # Генерация inline и reply клавиатур
+    │   ├── services/         # Бизнес-логика (например, OrderService)
+    │   └── states/           # Группы состояний FSM
+    ├── .env                  # Переменные окружения (не коммитится!)
+    ├── requirements.txt
+    └── README.md
 
 ### 📡 API бота (Команды и Callbacks)
 
