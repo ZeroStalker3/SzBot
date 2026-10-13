@@ -1,11 +1,11 @@
 # SzBot — Telegram-портфолио и сбор заявок
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white" alt="Python 3.10+">
-  <img src="https://img.shields.io/badge/aiogram-3.x-2CA5E0?logo=telegram&logoColor=white" alt="aiogram 3.x">
-  <img src="https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white" alt="SQLite">
-  <img src="https://img.shields.io/badge/License-MIT-3DA639" alt="MIT License">
-</div>
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/aiogram-3.x-blue?logo=telegram" alt="aiogram">
+  <img src="https://img.shields.io/badge/DB-SQLite-lightgrey" alt="SQLite">
+  <img src="https://img.shields.io/badge/License-MIT-green" alt="License">
+</p>
 
 ## О проекте
 
